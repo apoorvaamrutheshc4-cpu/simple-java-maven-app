@@ -1,18 +1,18 @@
 pipeline {
- 
+
     agent any
- 
+
     tools {
-        Maven 'mvn3.9.16'
+        maven 'mvn3.9.16'
     }
- 
+
     environment {
         APP_NAME = "java-maven-app"
         DOCKER_IMAGE = "myapp:v1"
     }
- 
+
     stages {
- 
+
         // STEP 1 - Echo Commands
         stage('Echo Stage') {
             steps {
@@ -20,40 +20,40 @@ pipeline {
                 echo 'Learning Jenkins Declarative Pipeline'
             }
         }
- 
+
         // STEP 2 - Git Clone
         stage('Git Clone') {
             steps {
                 git 'https://github.com/jenkins-docs/simple-java-maven-app.git'
             }
         }
- 
+
         // STEP 3 - Maven Build
         stage('Maven Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
- 
+
         // STEP 4 - Run Test Cases
         stage('Test Stage') {
             steps {
                 sh 'mvn test'
             }
-        }       
+        }
     }
- 
+
     // POST ACTIONS
     post {
- 
+
         success {
             echo 'Pipeline Executed Successfully'
         }
- 
+
         failure {
             echo 'Pipeline Failed'
         }
- 
+
         always {
             echo 'Pipeline Execution Completed'
         }
